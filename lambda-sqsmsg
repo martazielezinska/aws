@@ -1,0 +1,613 @@
+import json
+import boto3
+
+def index_handler(event, context):
+    sqs = boto3.client('sqs')
+
+    queue_url = 'https://sqs.us-east-1.amazonaws.com/282448704244/Kolejka'
+    
+    dane = [
+      {
+        "ID": "LOK001",
+        "lokalizacja": "Park Kuzniczki",
+        "x": "54.382059",
+        "y": "18.607072"
+      },
+      {
+        "ID": "LOK002",
+        "lokalizacja": "Plac Wybickiego",
+        "x": "54.384332",
+        "y": "18.609666"
+      },
+      {
+        "ID": "LOK003",
+        "lokalizacja": "Stacja SKM Wrzeszcz - Plac Kolodziejskiego",
+        "x": "54.381246",
+        "y": "18.6048"
+      },
+      {
+        "ID": "LOK004",
+        "lokalizacja": "Park Grodzisko",
+        "x": "54.351781",
+        "y": "18.637527"
+      },
+      {
+        "ID": "LOK005",
+        "lokalizacja": "Stacja SKM Oliwa",
+        "x": "54.410291",
+        "y": "18.571996"
+      },
+      {
+        "ID": "LOK006",
+        "lokalizacja": "Plac Dwoch Miast",
+        "x": "54.425453",
+        "y": "18.580939"
+      },
+      {
+        "ID": "LOK007",
+        "lokalizacja": "Dworzec PKS",
+        "x": "54.356219",
+        "y": "18.642615"
+      },
+      {
+        "ID": "LOK008",
+        "lokalizacja": "Stacja PKP Gdansk Glowny",
+        "x": "54.355741",
+        "y": "18.645152"
+      },
+      {
+        "ID": "LOK009",
+        "lokalizacja": "Park im. Reagana lok. III",
+        "x": "54.412251",
+        "y": "18.614494"
+      },
+      {
+        "ID": "LOK010",
+        "lokalizacja": "Przystan Zabi Kruk",
+        "x": "54.341718",
+        "y": "18.649283"
+      },
+      {
+        "ID": "LOK011",
+        "lokalizacja": "Przystan Sienna Grobla",
+        "x": "54.353616",
+        "y": "18.662718"
+      },
+      {
+        "ID": "LOK012",
+        "lokalizacja": "Przystan Tamka",
+        "x": "54.357325",
+        "y": "18.71263"
+      },
+      {
+        "ID": "LOK013",
+        "lokalizacja": "Przystan Nadwislanska",
+        "x": "54.343788",
+        "y": "18.825445"
+      },
+      {
+        "ID": "LOK014",
+        "lokalizacja": "Nowy Port CAE Laznia 2",
+        "x": "54.399175",
+        "y": "18.670942"
+      },
+      {
+        "ID": "LOK015",
+        "lokalizacja": "Skwer ul. Marynarki Polskiej",
+        "x": "54.399307",
+        "y": "18.668656"
+      },
+      {
+        "ID": "LOK016",
+        "lokalizacja": "Reduta Wilk",
+        "x": "54.339134",
+        "y": "18.654492"
+      },
+      {
+        "ID": "LOK017",
+        "lokalizacja": "Zieleniec przy ul. Jalmuzniczej",
+        "x": "54.341496",
+        "y": "18.656241"
+      },
+      {
+        "ID": "LOK018",
+        "lokalizacja": "Park de Gaulle'a",
+        "x": "54.379566",
+        "y": "18.602758"
+      },
+      {
+        "ID": "LOK019",
+        "lokalizacja": "Park ks. Kanonika Orkusza",
+        "x": "54.391454",
+        "y": "18.647193"
+      },
+      {
+        "ID": "LOK020",
+        "lokalizacja": "Brzezno Molo",
+        "x": "54.413412",
+        "y": "18.624443"
+      },
+      {
+        "ID": "LOK021",
+        "lokalizacja": "Targ Weglowy",
+        "x": "54.350781",
+        "y": "18.647564"
+      },
+      {
+        "ID": "LOK022",
+        "lokalizacja": "Plac Zebran Ludowych",
+        "x": "54.361623",
+        "y": "18.641134"
+      },
+      {
+        "ID": "LOK023",
+        "lokalizacja": "Plaza Jelitkowo",
+        "x": "54.423563",
+        "y": "18.601619"
+      },
+      {
+        "ID": "LOK024",
+        "lokalizacja": "Plaza Brzezno I",
+        "x": "54.411005",
+        "y": "18.630143"
+      },
+      {
+        "ID": "LOK025",
+        "lokalizacja": "Park Brzeznienski im. Haffnera",
+        "x": "54.407297",
+        "y": "18.646727"
+      },
+      {
+        "ID": "LOK026",
+        "lokalizacja": "Plaza Stogi",
+        "x": "54.374663",
+        "y": "18.731097"
+      },
+      {
+        "ID": "LOK027",
+        "lokalizacja": "Plaza Wyspa Sobieszewska",
+        "x": "54.347626",
+        "y": "18.875126"
+      },
+      {
+        "ID": "LOK028",
+        "lokalizacja": "Park Oliwski",
+        "x": "54.410937",
+        "y": "18.561474"
+      },
+      {
+        "ID": "LOK029",
+        "lokalizacja": "Park im. Reagana lok. I",
+        "x": "54.418374",
+        "y": "18.611536"
+      },
+      {
+        "ID": "LOK030",
+        "lokalizacja": "Park im. Jana Pawla II",
+        "x": "54.400374",
+        "y": "18.605942"
+      },
+      {
+        "ID": "LOK031",
+        "lokalizacja": "Park Millenium Gdanska",
+        "x": "54.397047",
+        "y": "18.613233"
+      },
+      {
+        "ID": "LOK032",
+        "lokalizacja": "Park Akademicki",
+        "x": "54.371423",
+        "y": "18.623579"
+      },
+      {
+        "ID": "LOK033",
+        "lokalizacja": "Park im. Steffena",
+        "x": "54.364161",
+        "y": "18.639622"
+      },
+      {
+        "ID": "LOK034",
+        "lokalizacja": "Park Oplywu Motlawy",
+        "x": "54.339056",
+        "y": "18.65432"
+      },
+      {
+        "ID": "LOK035",
+        "lokalizacja": "Park Orunski",
+        "x": "54.321974",
+        "y": "18.628748"
+      },
+      {
+        "ID": "LOK036",
+        "lokalizacja": "Akademia Wychowania Fizycznego i Sportu",
+        "x": "54.41962",
+        "y": "18.562336"
+      },
+      {
+        "ID": "LOK037",
+        "lokalizacja": "Piwna",
+        "x": "54.349951",
+        "y": "18.6515"
+      },
+      {
+        "ID": "LOK038",
+        "lokalizacja": "UMG Medyk",
+        "x": "54.360654",
+        "y": "18.629263"
+      },
+      {
+        "ID": "LOK039",
+        "lokalizacja": "ZOO Oliwa",
+        "x": "54.413334",
+        "y": "18.533657"
+      },
+      {
+        "ID": "LOK040",
+        "lokalizacja": "Twierdza Wisloujscie",
+        "x": "54.395883",
+        "y": "18.679132"
+      },
+      {
+        "ID": "LOK041",
+        "lokalizacja": "Pomnik Poleglych Stoczniowcow",
+        "x": "54.36025",
+        "y": "18.649674"
+      },
+      {
+        "ID": "LOK042",
+        "lokalizacja": "Gora Gradowa",
+        "x": "54.35698",
+        "y": "18.640007"
+      },
+      {
+        "ID": "LOK043",
+        "lokalizacja": "Skwer przed Krewetka",
+        "x": "54.355902",
+        "y": "18.646453"
+      },
+      {
+        "ID": "LOK044",
+        "lokalizacja": "Zieleniec Heweliusza",
+        "x": "54.354097",
+        "y": "18.649797"
+      },
+      {
+        "ID": "LOK045",
+        "lokalizacja": "Skwer Czeslawa Niemena",
+        "x": "54.352332",
+        "y": "18.644734"
+      },
+      {
+        "ID": "LOK046",
+        "lokalizacja": "Park Hucisko",
+        "x": "54.351473",
+        "y": "18.644714"
+      },
+      {
+        "ID": "LOK047",
+        "lokalizacja": "Targ Drzewny",
+        "x": "54.352481",
+        "y": "18.648756"
+      },
+      {
+        "ID": "LOK048",
+        "lokalizacja": "Brama Wyzynna",
+        "x": "54.350115",
+        "y": "18.646873"
+      },
+      {
+        "ID": "LOK049",
+        "lokalizacja": "Dom Harcerza",
+        "x": "54.348691",
+        "y": "18.647359"
+      },
+      {
+        "ID": "LOK050",
+        "lokalizacja": "Dluga i Dlugi Targ",
+        "x": "54.348493",
+        "y": "18.653586"
+      },
+      {
+        "ID": "LOK051",
+        "lokalizacja": "Szeroka I",
+        "x": "54.351176",
+        "y": "18.653806"
+      },
+      {
+        "ID": "LOK052",
+        "lokalizacja": "Park im. Reagana lok. II",
+        "x": "54.415142",
+        "y": "18.601591"
+      },
+      {
+        "ID": "LOK053",
+        "lokalizacja": "Grobla",
+        "x": "54.351176",
+        "y": "18.653806"
+      },
+      {
+        "ID": "LOK054",
+        "lokalizacja": "Bazylika Mariacka",
+        "x": "54.350319",
+        "y": "18.65352"
+      },
+      {
+        "ID": "LOK055",
+        "lokalizacja": "Szeroka II",
+        "x": "54.351176",
+        "y": "18.653806"
+      },
+      {
+        "ID": "LOK056",
+        "lokalizacja": "Mariacka",
+        "x": "54.349512",
+        "y": "18.656231"
+      },
+      {
+        "ID": "LOK057",
+        "lokalizacja": "Sw. Ducha",
+        "x": "54.350084",
+        "y": "18.655732"
+      },
+      {
+        "ID": "LOK058",
+        "lokalizacja": "Stagiewna",
+        "x": "54.347811",
+        "y": "18.655881"
+      },
+      {
+        "ID": "LOK059",
+        "lokalizacja": "Dlugie Pobrzeze",
+        "x": "54.347811",
+        "y": "18.655881"
+      },
+      {
+        "ID": "LOK060",
+        "lokalizacja": "Rybackie Pobrzeze",
+        "x": "54.35255",
+        "y": "18.659291"
+      },
+      {
+        "ID": "LOK061",
+        "lokalizacja": "Skwer przy Polskiej Filharmonii Baltyckiej",
+        "x": "54.35255",
+        "y": "18.659291"
+      },
+      {
+        "ID": "LOK062",
+        "lokalizacja": "Skwer przy Muzeum Narodowym",
+        "x": "54.345712",
+        "y": "18.646582"
+      },
+      {
+        "ID": "LOK063",
+        "lokalizacja": "Deptak - Zabianka",
+        "x": "54.420797",
+        "y": "18.573642"
+      },
+      {
+        "ID": "LOK064",
+        "lokalizacja": "Westerplatte",
+        "x": "54.406652",
+        "y": "18.675614"
+      },
+      {
+        "ID": "LOK065",
+        "lokalizacja": "Skwer przy PGE-ARENA",
+        "x": "54.391244",
+        "y": "18.642033"
+      },
+      {
+        "ID": "LOK066",
+        "lokalizacja": "Skwer przy ul. Goscinnej",
+        "x": "54.323216",
+        "y": "18.631922"
+      },
+      {
+        "ID": "LOK067",
+        "lokalizacja": "Skwer przy ul. Wodopoj",
+        "x": "54.355481",
+        "y": "18.65164"
+      },
+      {
+        "ID": "LOK068",
+        "lokalizacja": "Dlugie Pobrzeze - Brama Sw. Ducha",
+        "x": "54.34986108533562",
+        "y": "18.657202314849883"
+      },
+      {
+        "ID": "LOK069",
+        "lokalizacja": "Marina Szafarnia",
+        "x": "54.349735950244344",
+        "y": "18.6601781079346"
+      },
+      {
+        "ID": "LOK070",
+        "lokalizacja": "Park Przymorze",
+        "x": "54.41965785120001",
+        "y": "18.589187722228985"
+      },
+      {
+        "ID": "LOK071",
+        "lokalizacja": "Plaza Brzezno II",
+        "x": "54.408470886390674",
+        "y": "18.64201595368354"
+      },
+      {
+        "ID": "LOK072",
+        "lokalizacja": "Stacja SKM - Gdansk Politechnika",
+        "x": "54.37428687238104",
+        "y": "18.627342084130873"
+      },
+      {
+        "ID": "LOK073",
+        "lokalizacja": "Zieleniec przy al. Hallera",
+        "x": "54.37905752710682",
+        "y": "18.622894763946533"
+      },
+      {
+        "ID": "LOK074",
+        "lokalizacja": "Zieleniec przy ul. Bohomolca",
+        "x": "54.38903072879635",
+        "y": "18.625501542852817"
+      },
+      {
+        "ID": "LOK075",
+        "lokalizacja": "Zieleniec przy ul. Buczka",
+        "x": "54.342154",
+        "y": "18.627483"
+      },
+      {
+        "ID": "LOK076",
+        "lokalizacja": "Zieleniec przy ul. Pomorskiej",
+        "x": "54.42320351982278",
+        "y": "18.59471018305055"
+      },
+      {
+        "ID": "LOK077",
+        "lokalizacja": "Zieleniec przy ul. Wilanowskiej",
+        "x": "54.33324466719453",
+        "y": "18.601752127508576"
+      },
+      {
+        "ID": "LOK078",
+        "lokalizacja": "Zieleniec Piecki-Migowo",
+        "x": "54.34808415979418",
+        "y": "18.569719468292305"
+      },
+      {
+        "ID": "LOK079",
+        "lokalizacja": "Skwer przy al. Zolnierzy Wykletych",
+        "x": "54.383064",
+        "y": "18.597873"
+      },
+      {
+        "ID": "LOK080",
+        "lokalizacja": "Skwer przy ul. Siennickiej",
+        "x": "54.356698",
+        "y": "18.679578"
+      },
+      {
+        "ID": "LOK081",
+        "lokalizacja": "Skwer przy ul. Zeromskiego",
+        "x": "54.406567266498385",
+        "y": "18.562437915344276"
+      },
+      {
+        "ID": "LOK082",
+        "lokalizacja": "Latarnia Morska w Nowym Porcie",
+        "x": "54.407896",
+        "y": "18.660477"
+      },
+      {
+        "ID": "LOK083",
+        "lokalizacja": "Aktiv Park Przymorze",
+        "x": "54.413791",
+        "y": "18.591734"
+      },
+      {
+        "ID": "LOK084",
+        "lokalizacja": "Skatepark Osowa",
+        "x": "54.421246",
+        "y": "18.481016"
+      },
+      {
+        "ID": "LOK085",
+        "lokalizacja": "Plac Biskupa O'Rourke.",
+        "x": "54.383005",
+        "y": "18.626097"
+      },
+      {
+        "ID": "LOK086",
+        "lokalizacja": "Plac gen. Maczka",
+        "x": "54.38673116053939",
+        "y": "18.58265766004945"
+      },
+      {
+        "ID": "LOK087",
+        "lokalizacja": "Plac Pilsudzkiego",
+        "x": "54.386259387873366",
+        "y": "18.591384155819696"
+      },
+      {
+        "ID": "LOK088",
+        "lokalizacja": "Park w Jasieniu",
+        "x": "54.343076098094926",
+        "y": "18.55458317130274"
+      },
+      {
+        "ID": "LOK089",
+        "lokalizacja": "Park przy ul. Chirona",
+        "x": "54.425846107747915",
+        "y": "18.46747141114497"
+      },
+      {
+        "ID": "LOK090",
+        "lokalizacja": "Park przy ul. Blizniat",
+        "x": "54.42715739017063",
+        "y": "18.482234776196265"
+      },
+      {
+        "ID": "LOK091",
+        "lokalizacja": "Park nad Strzyza",
+        "x": "54.38050662499166",
+        "y": "18.618300401574743"
+      },
+      {
+        "ID": "LOK092",
+        "lokalizacja": "Park Zielony",
+        "x": "54.36747954135278",
+        "y": "18.630102727044687"
+      },
+      {
+        "ID": "LOK093",
+        "lokalizacja": "Park Siennicki",
+        "x": "54.34976589606949",
+        "y": "18.67082749178769"
+      },
+      {
+        "ID": "LOK094",
+        "lokalizacja": "Park Bema",
+        "x": "54.35133779224704",
+        "y": "18.632005893701148"
+      },
+      {
+        "ID": "LOK095",
+        "lokalizacja": "Park w Krolewskiej Dolinie",
+        "x": "54.36663926827034",
+        "y": "18.610728674591087"
+      },
+      {
+        "ID": "LOK096",
+        "lokalizacja": "Park Uphagena",
+        "x": "54.3758918496256",
+        "y": "18.617425970361296"
+      },
+      {
+        "ID": "LOK097",
+        "lokalizacja": "Park Jalkowej Doliny",
+        "x": "54.369744413182275",
+        "y": "18.5961689118119"
+      },
+      {
+        "ID": "LOK098",
+        "lokalizacja": "Wzgorze Pacholek",
+        "x": "54.411236776170426",
+        "y": "18.552292549151616"
+      },
+      {
+        "ID": "LOK099",
+        "lokalizacja": "Stacja Strzyza",
+        "x": "54.391201674503705",
+        "y": "18.578359043953014"
+      },
+      {
+        "ID": "LOK100",
+        "lokalizacja": "Stacja SKM Zabianka-AWFiS",
+        "x": "54.420901743403256",
+        "y": "18.568152862964666"
+      }
+    ];
+
+    for wiadomosc in dane:
+        response = sqs.send_message(QueueUrl=queue_url,DelaySeconds=0,MessageBody=json.dumps(wiadomosc))
