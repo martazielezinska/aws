@@ -1,0 +1,22 @@
+import json
+import boto3
+
+def lambda_handler(event, context):
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table('Tabela')
+    response = table.scan()
+    items = response['Items']
+    grupy = []
+    grupa = []
+    while items:
+        for wiadomosc in items:
+            if ((float(items[0]['y'])-float(wiadomosc['y']))**2 + (float(items[0]['x'])-float(wiadomosc['x']))**2) < 0.0007304601899196494:
+                grupa.append(wiadomosc)
+        for element in grupa:
+            items.remove(element)
+        grupy.append(grupa.copy())	
+        print('Grupa: ' + str(len(grupa)))
+        grupa.clear()
+    print('Items: ' + str(len(items)))
+    print('Grupy: ' + str(len(grupy)))
+    return grupy
